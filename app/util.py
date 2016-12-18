@@ -6,6 +6,7 @@ import models
 
 
 def login_required():
+    """Decorator to do the authentication for the requested user."""
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
@@ -26,6 +27,7 @@ def login_required():
 
 
 def length_validation(param, val, min_val=6, max_val=16):
+    """Length validation for the parameter."""
     if param == 'text':
         min_val, max_val = 1, 120
 
@@ -36,6 +38,7 @@ def length_validation(param, val, min_val=6, max_val=16):
 
 
 def get_param_dict(data_dict):
+    """Returns a parameter dict after validation."""
     param_dict = {}
     for param in ['from', 'to', 'text']:
         param_val = data_dict.get(param, None)

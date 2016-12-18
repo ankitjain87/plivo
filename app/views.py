@@ -4,6 +4,7 @@ from app import cache
 
 import cPickle
 from datetime import datetime
+import logging
 
 import config
 import models
@@ -16,6 +17,15 @@ def index():
 
 @login_required()
 def inbound(account):
+    """Inbound sms.
+
+    Args:
+        account: User account.
+
+    Returns:
+        A dict with message and error based on the given parameters.
+
+    """
     if request.method != 'POST':
         abort(405, "Only Post allowed.")
 
@@ -37,11 +47,21 @@ def inbound(account):
 
         return jsonify({'message': 'inbound sms ok', 'error': ''})
     except Exception as ex:
+        logging.info(ex)
         return jsonify({'message': '', 'error': 'unknown failure'})
 
 
 @login_required()
 def outbound(account):
+    """Outbound sms.
+
+    Args:
+        account: User account.
+
+    Returns:
+        A dict with message and error based on the given parameters.
+
+    """
     if request.method != 'POST':
         abort(405, "Only Post allowed.")
 
@@ -95,4 +115,5 @@ def outbound(account):
 
         return jsonify({'message': 'outbound sms ok', 'error': ''})
     except Exception as ex:
+        logging.info(ex)
         return jsonify({'message': '', 'error': 'unknown failure'})
